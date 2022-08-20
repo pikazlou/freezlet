@@ -1,28 +1,40 @@
 <!DOCTYPE html>
 <html>
-<head><meta charset="utf-8"></head>
+<head>
+    <meta charset="utf-8"/>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="script.js"></script>
+</head>
 <body>
 
-<div>&nbsp;</div>
-<input/>
-<button type="button">ą</button>
-<button type="button">č</button>
-<button type="button">ę</button>
-<button type="button">ė</button>
-<button type="button">į</button>
-<button type="button">š</button>
-<button type="button">ų</button>
-<button type="button">ū</button>
-<button type="button">ž</button>
+<div id="question">&nbsp;</div>
+<input id="answer"/>
+<button id="submit" type="button">Адказаць</button>
+<br/>
+<br/>
+<button class="diacritic" type="button">ą</button>
+<button class="diacritic" type="button">č</button>
+<button class="diacritic" type="button">ę</button>
+<button class="diacritic" type="button">ė</button>
+<button class="diacritic" type="button">į</button>
+<button class="diacritic" type="button">š</button>
+<button class="diacritic" type="button">ų</button>
+<button class="diacritic" type="button">ū</button>
+<button class="diacritic" type="button">ž</button>
+<br/>
+<br/>
+<div id="outcome">&nbsp;</div>
+<div id="outcome_correct" style="display: none"><span style="color: green">Правільна! </span></div>
+<div id="outcome_incorrect" style="display: none"><span style="color: red">Няправільна! </span></div>
+<br/>
+<br/>
 
 <h3>Канфігурацыя</h3>
 <input type="checkbox" id="strict-match">
 <label for="strict-match">Правяраць дыякрытычныя знакі</label><br>
 <h4>Слоўнікі</h4>
-<input type="checkbox" id="kalba-1">
-<label for="kalba-1">Kalba 1</label><br>
-<input type="checkbox" id="kalba-2">
-<label for="kalba-2">Kalba 2</label><br>
+<input type="checkbox" class="dicts" id="sekmes-1">
+<label for="sekmes-1">Sekmes-1 (Koks jūsų vardas?)</label><br>
 
 </body>
 </html>
