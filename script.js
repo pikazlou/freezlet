@@ -3,6 +3,7 @@ $(document).ready(function(){
         var character = $(this).text();
         var current_input = $('#answer').val() || '';
         $('#answer').val(current_input + character);
+        $('#answer').focus();
     });
 
     $('.dicts:not(:checked)').click(function() {
@@ -11,14 +12,8 @@ $(document).ready(function(){
 
     $('#answer').on('keypress', function (e) {
          if(e.which === 13){
-            //Disable textbox to prevent multiple submit
-            $(this).attr("disabled", "disabled");
-
             var answer = $(this).val();
             submit_answer(answer);
-
-            //Enable the textbox again if needed.
-            $(this).removeAttr("disabled");
          }
    });
    $('#submit').click(function () {
@@ -53,6 +48,8 @@ function submit_answer(answer) {
     var question = $('#question').text();
     var correct_answer = pool[question];
     var strict_match = $('#strict-match').is(':checked');
+    answer = answer.toLowerCase();
+    correct_answer = correct_answer.toLowerCase();
     if (!strict_match) {
         answer = remove_diacritics(answer);
         correct_answer = remove_diacritics(correct_answer);
