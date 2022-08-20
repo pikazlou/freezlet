@@ -9,8 +9,6 @@ $(document).ready(function(){
         show_next_word();
     });
 
-    $('#answer').focus();
-
     $('#answer').on('keypress', function (e) {
          if(e.which === 13){
             //Disable textbox to prevent multiple submit
@@ -24,7 +22,6 @@ $(document).ready(function(){
          }
    });
    $('#submit').click(function () {
-        alert(remove_diacritics('pąvąrde'));
         var answer = $('#answer').val();
         submit_answer(answer);
    });
@@ -72,6 +69,8 @@ function submit_answer(answer) {
 function show_next_word() {
     var word = get_next_word() || '\xa0';
     $('#question').text(word);
+    $('#answer').val('');
+    $('#answer').focus();
 }
 
 var pool = {};
