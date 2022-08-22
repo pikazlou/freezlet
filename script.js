@@ -26,7 +26,6 @@ $(document).ready(function(){
 });
 
 var prev_answers = {}   // 'імя': [true, 2] - means імя was correctly answered 2 turns ago
-var answer_record = []
 function submit_answer(answer) {
     var question = $('#question').text();
     var correct_answer = pool[question];
@@ -50,12 +49,10 @@ function submit_answer(answer) {
     if (correct) {
         $('#outcome').html($('#outcome_correct').html() + '<b>' + pool[question] + '</b>');
         prev_answers[question] = [true, 1];
-        answer_record = prepend_and_cap(true, answer_record);
         show_next_word();
     } else {
         $('#outcome').html($('#outcome_incorrect').html() + '<b>' + pool[question] + '</b>');
         prev_answers[question] = [false, 1];
-        answer_record = prepend_and_cap(false, answer_record);
         show_next_word();
     }
 }
@@ -65,20 +62,7 @@ function show_next_word() {
     $('#question').text(word);
     $('#answer').val('');
     $('#answer').focus();
-    draw_record();
     show_progress();
-}
-
-function draw_record() {
-    var result = '\xa0';
-    answer_record.forEach(function(correct) {
-        if (correct) {
-            result = result + '\u{1F7E2} '
-        } else {
-            result = result + '\u{1F534} '
-        }
-    });
-    $('#record').text(result);
 }
 
 var pool = {};
