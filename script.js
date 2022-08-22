@@ -66,6 +66,7 @@ function show_next_word() {
     $('#answer').val('');
     $('#answer').focus();
     draw_record();
+    show_progress();
 }
 
 function draw_record() {
@@ -112,22 +113,37 @@ function get_next_word() {
         prob_sum += prob;
     }
 
-
     var keys = Object.keys(pool);
 
     var num = Math.random(),
             s = 0,
             lastIndex = keys.length - 1;
 
-        for (var i = 0; i < lastIndex; ++i) {
-            s += word_probabilities[keys[i]] / prob_sum;
-            if (num < s) {
-                return keys[i];
-            }
+    for (var i = 0; i < lastIndex; ++i) {
+        s += word_probabilities[keys[i]] / prob_sum;
+        if (num < s) {
+            return keys[i];
         }
-
-
+    }
     return keys[lastIndex];
+}
+
+function show_progress() {
+    var progress = get_progress();
+    $('#progressbar').val(progress);
+    $('#progressbar').text(progress + '%');
+}
+
+function get_progress() {
+    var keys = Object.keys(pool);
+    var total = keys.length;
+    var correctly_answered = 0;
+    for (key in pool) {
+        if (key in prev_answers && prev_answers[key][0]) {
+            correctly_answered += 1;
+        }
+    }
+    return 100 * correctly_answered / total;
 }
 
 function remove_diacritics(text) {
