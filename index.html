@@ -5,12 +5,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="script.js?version=4"></script>
+    <link rel="stylesheet" href="style.css?version=4">
 </head>
 <body>
-
-<div id="question">&nbsp;</div>
+<img src="freezlet.png" alt="F" style="height: 2em; width: auto; margin-left: 1em; margin-top: 0.5em"/>
+<br/>
+<br/>
+Translate:<br/>
+<div id="question" style="font-weight: bold">&nbsp;</div>
+<br/>
 <input id="answer"/>
-<button id="submit" type="button">Answer</button>
+<button id="submit" type="button">Answer</button>&nbsp;&nbsp;
+<div class="tooltip">(?)
+    <span class="tooltiptext">Start by selecting vocabularies. If there are parentheses, then you should ignore words inside them, they are just for context</span>
+</div>
 <br/>
 <br/>
 <button class="diacritic" type="button">ą</button>
@@ -33,7 +41,7 @@
 <h3>Configuration</h3>
 <input type="checkbox" id="strict-match">
 <label for="strict-match">Check diacritics</label><br>
-<h4>Vocabulary</h4>
+<h4>Vocabularies</h4>
 <input type="checkbox" class="dicts" id="sekmes-1-basic">
 <label for="sekmes-1-basic">Sekmes-1 (Koks jūsų vardas?), basic</label><br>
 <input type="checkbox" class="dicts" id="sekmes-1-advanced">
@@ -48,5 +56,6 @@
 <label for="sekmes-3-basic">Sekmes-3 (Koks tavo adresas?), basic</label><br>
 <input type="checkbox" class="dicts" id="sekmes-3-advanced">
 <label for="sekmes-3-advanced">Sekmes-3 (Koks tavo adresas?), advanced</label><br>
+<br/>
 </body>
 </html>
