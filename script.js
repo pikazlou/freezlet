@@ -30,6 +30,7 @@ function submit_answer(answer) {
     var question = $('#question').text();
     var correct_answer = pool[question];
     var strict_match = $('#strict-match').is(':checked');
+    var original_answer = answer;
     answer = answer.toLowerCase().replace(/\?/g,'').replace(/,/g,'');
     correct_answer = correct_answer.toLowerCase().replace(/\?/g,'').replace(/,/g,'');
     if (!strict_match) {
@@ -47,11 +48,11 @@ function submit_answer(answer) {
         }
     });
     if (correct) {
-        $('#outcome').html($('#outcome_correct').html() + '<b>' + pool[question] + '</b>');
+        $('#outcome').html($('#outcome_correct').html().replace('{input}', original_answer));
         prev_answers[question] = [true, 1];
         show_next_word();
     } else {
-        $('#outcome').html($('#outcome_incorrect').html() + '<b>' + pool[question] + '</b>');
+        $('#outcome').html($('#outcome_incorrect').html().replace('{input}', original_answer).replace('{correct}', pool[question]));
         prev_answers[question] = [false, 1];
         show_next_word();
     }
@@ -438,7 +439,7 @@ var dicts = {
         'I go (by transport) to airport': 'Aš važiuoju į oro uostą',
         'I\'m listening (phone)': 'Klausau/Aš klausau',
         'I invite you tomorrow': 'kviečiu rytoj į svečius',
-        'I will definitely come (in response to invitation': 'Būtinai ateisiu',
+        'I will definitely come (in response to invitation)': 'Būtinai ateisiu',
         'Let\'s go to Jonas tomorrow afternoon': 'Einame rytoj po pietų pas Joną',
         'We go together': 'Einame kartu/Mes einame kartu,',
         'Sorry, we are a little late': 'Atsiprašau, mes truputį vėluojame',
