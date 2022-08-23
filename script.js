@@ -9,7 +9,7 @@ $(document).ready(function(){
         document.getElementById("answer").selectionEnd = caretPos + 1;
     });
 
-    $('.dicts:not(:checked)').click(function() {
+    $('.dicts').click(function() {
         show_next_word();
     });
 
@@ -63,6 +63,13 @@ function show_next_word() {
     $('#answer').val('');
     $('#answer').focus();
     show_progress();
+    if (word == '\xa0') {
+        $('#select_vocabulary').show();
+        $('#translate').hide();
+    } else {
+        $('#select_vocabulary').hide();
+        $('#translate').show();
+    }
 }
 
 var pool = {};
@@ -127,7 +134,7 @@ function get_progress() {
             correctly_answered += 1;
         }
     }
-    return 100 * correctly_answered / total;
+    return 100 * correctly_answered / Math.max(1, total);
 }
 
 function remove_diacritics(text) {
