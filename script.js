@@ -48,7 +48,7 @@ function submit_answer(answer) {
         }
     });
     if (correct) {
-        $('#outcome').html($('#outcome_correct').html().replace('{input}', original_answer));
+        $('#outcome').html($('#outcome_correct').html().replace('{correct}', pool[question]));
         prev_answers[question] = [true, 1];
         show_next_word();
     } else {
