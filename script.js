@@ -518,7 +518,7 @@ var dicts = {
         'to look': 'žiūrėjo',
         'to like': 'mėgti',
         'she likes': 'ji mėgsta',
-        'to like': 'mėgo',
+        'to like (past form)': 'mėgo',
         'to do sports': 'sportuoti',
         'he does sports': 'jis sportuoja',
         'to do sports': 'sportavo',
