@@ -31,8 +31,8 @@ function submit_answer(answer) {
     var correct_answer = pool[question];
     var strict_match = $('#strict-match').is(':checked');
     var original_answer = answer;
-    answer = answer.toLowerCase().replace(/\?/g,'').replace(/,/g,'');
-    correct_answer = correct_answer.toLowerCase().replace(/\?/g,'').replace(/,/g,'');
+    answer = answer.toLowerCase().replace(/\?/g,'').replace(/,/g,'').replace(/\./g,'');
+    correct_answer = correct_answer.toLowerCase().replace(/\?/g,'').replace(/,/g,'').replace(/\./g,'');
     if (!strict_match) {
         answer = remove_diacritics(answer);
         correct_answer = remove_diacritics(correct_answer);
