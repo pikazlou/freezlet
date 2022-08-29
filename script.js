@@ -495,7 +495,7 @@ var dicts = {
         'dog': 'šuo',
         'this (male)': 'šis',
         'this (female)': 'ši',
-        'these': 'šie',
+        'these (male, male+female)': 'šie',
         'these (female)': 'šios',
         'music': 'muzika',
         'literature': 'literatūra',
