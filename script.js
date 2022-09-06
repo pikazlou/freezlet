@@ -601,7 +601,7 @@ var dicts = {
         'Big girls': 'Didelės mergaitės',
         'Big boys': 'Dideli berniukai',
         'I am the eldest child in the family': 'Aš esu vyriausias vaikas šeimoje',
-        'Is your brother younger than you?': 'Ar tavo brolis yra jaunesnis už tave?',
+        'Is your brother younger than you?': 'Ar tavo brolis yra jaunesnis už tave?/Ar tavo brolis jaunesnis už tave?',
         'My sister is older than me': 'Mano sesuo yra vyresnė už mane',
         'Their children live in Vilnius': 'Jų vaikai gyvena Vilniuje',
         'Their names are Rūta and Rasa': 'Jų vardai yra Rūta ir Rasa'
