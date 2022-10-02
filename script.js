@@ -685,9 +685,9 @@ var dicts = {
         'to have breakfast': 'pusryčiauti',
         'she has breakfast': 'ji pusryčiauja',
         'to have breakfast (past form)': 'pusryčiavo',
-        'to have dinner': 'pietauti',
-        'he has dinner': 'jis pietauja',
-        'to have dinner (past form)': 'pietavo',
+        'to have lunch': 'pietauti',
+        'he has lunch': 'jis pietauja',
+        'to have lunch (past form)': 'pietavo',
         'to have supper': 'vakarieniauti',
         'she has supper': 'ji vakarieniauja',
         'to have supper (past form)': 'vakarieniavo'
