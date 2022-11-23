@@ -4,6 +4,7 @@
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/levenshtein/1.0.5/levenshtein.min.js" integrity="sha512-33ylHAa4zDN8/pTirwhJNeRSO59Le/klF+6oEwgBMOpWpwVa4b0dNKXuzB3TrIWqI/Rff9iDczybhFPCeVGDrw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="script.js?version=5"></script>
     <link rel="stylesheet" href="style.css?version=5">
 </head>
@@ -43,6 +44,8 @@
 <div class="configuration">
 <input type="checkbox" id="strict-match">
 <label for="strict-match">Check diacritics</label><br>
+<input type="checkbox" id="one-off-allowed">
+<label for="strict-match">Allow mistake in one character</label><br>
 <h4>Vocabularies</h4>
 <input type="checkbox" class="dicts" id="sekmes-1-basic">
 <label for="sekmes-1-basic">Sekmes-1 (Koks jūsų vardas?), basic</label><br>
@@ -78,6 +81,10 @@
 <label for="sekmes-8-basic">Sekmes-8 (Šiandien eisiu į turgų), basic</label><br>
 <input type="checkbox" class="dicts" id="sekmes-8-advanced">
 <label for="sekmes-8-advanced">Sekmes-8 (Šiandien eisiu į turgų), advanced</label><br>
+<input type="checkbox" class="dicts" id="sekmes-10-basic">
+<label for="sekmes-10-basic">Sekmes-10 (Kaip nuvažiuoti į universitetą?), basic</label><br>
+<input type="checkbox" class="dicts" id="sekmes-11-basic">
+<label for="sekmes-11-basic">Sekmes-11 (Geros kelionės!), basic</label><br>
 </div>
 <br/>
 </body>
