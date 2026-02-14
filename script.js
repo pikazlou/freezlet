@@ -32,22 +32,88 @@ function submit_answer(answer) {
     var strict_match = $('#strict-match').is(':checked');
     var one_off_allowed = $('#one-off-allowed').is(':checked');
     var original_answer = answer;
+    
+    // Normalize user answer
     answer = answer.toLowerCase().replace(/\?/g,'').replace(/!/g,'').replace(/,/g,'').replace(/\./g,'');
-    correct_answer = correct_answer.toLowerCase().replace(/\?/g,'').replace(/!/g,'').replace(/,/g,'').replace(/\./g,'');
     if (!strict_match) {
         answer = remove_diacritics(answer);
-        correct_answer = remove_diacritics(correct_answer);
     }
+    
     for (var key in prev_answers) {
         var old = prev_answers[key]
         prev_answers[key] = [old[0], old[1] + 1];
     }
     var correct = false;
-    correct_answer.split('/').forEach(function (variant) {
-        var l1 = new Levenshtein(answer, variant)
-        if ( (one_off_allowed && l1.distance <= 1) || l1.distance <= 0 ) {
-            correct = true;
+    
+    // Generate all possible answer variations from the markup
+    function expandAnswerVariants(template) {
+        var variants = [template];
+        
+        // Process parentheses (option1|option2|option3)
+        var parenRegex = /\(([^)]+)\)/;
+        while (variants.some(function(v) { return parenRegex.test(v); })) {
+            var newVariants = [];
+            variants.forEach(function(variant) {
+                var match = variant.match(parenRegex);
+                if (match) {
+                    var options = match[1].split('|');
+                    options.forEach(function(option) {
+                        newVariants.push(variant.replace(parenRegex, option));
+                    });
+                } else {
+                    newVariants.push(variant);
+                }
+            });
+            variants = newVariants;
         }
+        
+        // Process square brackets [optional text] or [option1|option2]
+        var bracketRegex = /\[([^\]]+)\]/;
+        while (variants.some(function(v) { return bracketRegex.test(v); })) {
+            var newVariants = [];
+            variants.forEach(function(variant) {
+                var match = variant.match(bracketRegex);
+                if (match) {
+                    var content = match[1];
+                    // Check if there are options inside brackets
+                    if (content.indexOf('|') !== -1) {
+                        var options = content.split('|');
+                        // Include variant with each option
+                        options.forEach(function(option) {
+                            newVariants.push(variant.replace(bracketRegex, option));
+                        });
+                    } else {
+                        // Include variant with the optional text
+                        newVariants.push(variant.replace(bracketRegex, content));
+                    }
+                    // Always include variant without the optional text
+                    newVariants.push(variant.replace(bracketRegex, ''));
+                } else {
+                    newVariants.push(variant);
+                }
+            });
+            variants = newVariants;
+        }
+        
+        // Clean up multiple spaces and normalize each variant
+        return variants.map(function(v) {
+            v = v.replace(/\s+/g, ' ').trim();
+            v = v.toLowerCase().replace(/\?/g,'').replace(/!/g,'').replace(/,/g,'').replace(/\./g,'');
+            if (!strict_match) {
+                v = remove_diacritics(v);
+            }
+            return v;
+        });
+    }
+    
+    correct_answer.split('/').forEach(function (answerTemplate) {
+        var variants = expandAnswerVariants(answerTemplate);
+        variants.forEach(function(variant) {
+            var l1 = new Levenshtein(answer, variant);
+            if ( (one_off_allowed && l1.distance <= 1) || l1.distance <= 0 ) {
+                correct = true;
+            }
+        });
     });
     if (correct) {
         $('#outcome').html($('#outcome_correct').html().replace('{correct}', pool[question]));
@@ -533,7 +599,7 @@ var dicts = {
         'I have two brothers': 'Aš turiu du brolius',
         'Does he have sister?': 'Ar jis turi seserį?',
         'We have two sisters': 'Mes turime dvi seseris',
-        'They don\'t have brother': 'Jie neturi brolio',
+        'They don\'t have brother': 'Jie neturi brolio/Jos neturi brolio',
         'I don\'t have sister': 'Aš neturiu sesers',
         'This boy is my son': 'Šis berniukas yra mano sūnus',
         'This girl is my daughter': 'Ši mergaitė yra mano duktė',
@@ -624,9 +690,9 @@ var dicts = {
         'beef': 'jautiena',
         'turkey': 'kalakutiena',
         'pork': 'kiauliena',
-        'chicken': 'vištiena',
-        'sausage': 'dešra',
-        'sausages': 'dešrelės',
+        'chicken (food)': 'vištiena',
+        'sausage (e.g. salami)': 'dešra',
+        'sausages (e.g. hot dog)': 'dešrelės',
         'ham': 'kumpis',
         'fish': 'žuvis',
         'drinks': 'gėrimai',
@@ -636,12 +702,12 @@ var dicts = {
         'coffee': 'kava',
         'kvass': 'gira',
         'sweets': 'saldumynai',
-        'roll': 'bandelė',
+        'bun': 'bandelė',
         'honey': 'medus',
         'pie': 'pyragas',
         'chocolate': 'šokoladas',
         'doughnut': 'spurga',
-        'cake': 'tortas',
+        'cake': 'tortas/pyragas',
         'porridge': 'košė',
         'egg': 'kiaušinis',
         'sandwich': 'sumuštinis',
@@ -658,7 +724,7 @@ var dicts = {
         'boiled (cooked)': 'virtas/virta',
         'black': 'juodas/juoda',
         'to like': 'mėgti/patikti',
-        'he likes': 'ji mėgsta/jam patinka',
+        'he likes': 'jis mėgsta/jam patinka',
         'to like (past form)': 'mėgo/patiko',
         'to want': 'norėti',
         'she wants': 'ji nori',
@@ -712,12 +778,12 @@ var dicts = {
         '(You, singular, imperative) look': 'žiūrėk',
         '(You, plural, imperative) look': 'žiūrėkite',
         '(We, imperative) look': 'žiūrėkime',
-        '(Let him, imperative) watch': 'tegu žiūri',
-        'The cake is very tasty': 'Tortas yra labai skanus',
+        '(Imperative) Let\'s watch': 'tegu žiūri',
+        'The cake is very tasty': '(Tortas|Pyragas) [yra] labai skanus',
         'Please pass the cake (entire)': 'Prašom paduoti tortą',
         'Please pass the cake (some piece of)': 'Prašom paduoti torto',
         'Andrius, taste some cake!': 'Andriau, ragauk pyrago!',
-        'Children, eat cake and drink tea!': 'Vaikai, valgykite torto ir gerkite arbatos!',
+        'Children, eat cake and drink tea!': 'Vaikai, valgykite (torto|pyrago) ir gerkite arbatos!',
         'Do you (singular) like pie? (using patinka)': 'Ar tau patinka pyragas?',
         'Do you (plural) like sandwiches? (using patinka)': 'Ar jums patinka sumuštiniai?',
         'I like chocolate very much (using patinka)': 'Man labai patinka šokoladas',
@@ -726,7 +792,7 @@ var dicts = {
         'She likes tea (using patinka)': 'Jai patinka arbata',
         'They (boys) like beef (using patinka)': 'Jiems patinka jautiena',
         'They (girls) like chicken (using patinka)': 'Joms patinka vištiena',
-        'What do you want? Coffee or tea?': 'Ko tu nori? Kavos ar arbatos?',
+        'What do you (singular) want? Coffee or tea?': 'Ko tu nori? Kavos ar arbatos?',
         'Some more coffee?': 'Gal dar kavos?',
         'Some water?': 'Gal vandens?',
         'Do you (singular) want some coffee?': 'Gal nori kavos?',
@@ -738,17 +804,17 @@ var dicts = {
         'Glad to hear!': 'Malonu girdėti!',
         'Please, take seats': 'Prašom sėstis!',
         'Please, come to the table': 'Prašom prie stalo!',
-        'I\'m not hungry': 'Aš nealkanas/Aš nealkana',
-        'Your pie is always very tasty': 'Tavo pyragas visada labai skanus!/Tavo pyragas yra visada labai skanus!',
-        'Please, take some more meat': 'Prašom dar imti mėsos!',
-        'I\'m already full': 'Aš jau sotus.',
+        'I\'m not hungry': 'Aš (nealkanas|nealkana)/Aš nesu (alkanas|alkana)',
+        'Your pie is always very tasty': '(Tavo|Jūsų) pyragas [yra] visada labai skanus!',
+        'Please, take some more meat': 'Prašom dar (imti|imkite|imk) mėsos/Prašom (imti|imkite|imk) dar mėsos',
+        'I\'m already full': 'Aš (jau esu|esu jau) sotus.',
         '(Do you like bread?) - Not really': 'Nelabai',
-        'Pass me some bread': 'Paduok man duonos/Paduokite man duonos'
+        'Pass me some bread': '(Paduok|Paduokite) man duonos'
     },
     'sekmes-8-basic': {
         'market': 'turgus',
         'seller': 'pardavėjas/pardavėja',
-        'piece': 'gabaliukas/gabalėlis',
+        'piece (food)': 'gabaliukas/gabalėlis',
         'kilo': 'kilogramas',
         'bag': 'maišelis',
         'price': 'kaina',
@@ -769,14 +835,14 @@ var dicts = {
         'onion': 'svogūnas',
         'peas': 'žirniai',
         'fruit': 'vaisiai',
-        'orange': 'apelsinas',
+        'orange (fruit)': 'apelsinas',
         'banana': 'bananas',
         'lemon': 'citrina',
         'pear': 'kriaušė',
         'apple': 'obuolys',
         'berries': 'uogos',
-        'raspberries': '',
-        'strawberries': '',
+        'raspberries': 'avietės',
+        'strawberries': 'braškės',
         'currants': 'serbentai',
         'grapes': 'vynuogės',
         'cherries': 'vyšnios',
@@ -795,10 +861,10 @@ var dicts = {
         'sweet (adjective)': 'saldus/saldi',
         'sour (adjective)': 'rūgštus/rūgšti',
         'fresh': 'šviežias/šviežia',
-        'not fresh': 'senas/sena',
-        'rich': 'riebus/riebi',
+        'not fresh (one word)': 'senas/sena',
+        'fatty': 'riebus/riebi',
         'smoked': 'rūkytas/rūkyta',
-        'raw': 'žalias/žalia',
+        'raw (unbaked)': 'žalias/žalia',
         'white': 'baltas/balta',
         'yellow': 'geltonas/geltona',
         'blue': 'mėlynas/mėlyna',
@@ -827,8 +893,8 @@ var dicts = {
         'we will go': 'mes eisime',
         'you (plural) will go': 'jūs eisite',
         'they will go': 'jie eis/jos eis',
-        'What will you buy': 'Ką pirksi?',
-        'What else would you like?': 'Ko dar norėtumėte?',
+        'What will you buy?': 'Ką [jūs] pirksite?/Ką [tu] pirksi?',
+        'What else would you like?': 'Ko dar [jūs] norėtumėte?',
         'Maybe you need a bag?': 'Gal reikia maišelio?',
         'Anything else?': 'Dar ko nors?',
         'How much does a kilo cost?': 'Kiek kainuoja kilogramas?',
@@ -836,18 +902,18 @@ var dicts = {
         'next sunday': 'kitą sekmadienį',
         'next week': 'kitą savaitę',
         'next month': 'kitą mėnesį',
-        'Please give (me) tomatoes': 'Prašom duoti pomidorų',
-        'Please give (me) beetroots': 'Prašom duoti burokėlių',
-        'Please give (me) apples': 'Prašom duoti obuolių',
-        'Please give (me) carrots': 'Prašom duoti morkų',
-        'Please give (me) strawberries': 'Prašom duoti braškių',
-        'Please give (me) fruits': 'Prašom duoti vaisių',
-        'Please give (me) two tomatoes': 'Prašom duoti du pomidorus',
-        'Please give (me) two beetroots': 'Prašom duoti du burokėlius',
-        'Please give (me) two apples': 'Prašom duoti du obuolius',
-        'Please give (me) two carrots': 'Prašom duoti dvi morkas',
-        'Please give (me) two strawberries': 'Prašom duoti dvi braškes',
-        'Please give (me) two fruits': 'Prašom duoti du vaisius',
+        'Please give (me) tomatoes': '(Prašom|Prašau) (duoti|duokite) [man] pomidorų',
+        'Please give (me) beetroots': '(Prašom|Prašau) (duoti|duokite) [man] burokėlių',
+        'Please give (me) apples': '(Prašom|Prašau) (duoti|duokite) [man] obuolių',
+        'Please give (me) carrots': '(Prašom|Prašau) (duoti|duokite) [man] morkų',
+        'Please give (me) strawberries': '(Prašom|Prašau) (duoti|duokite) [man] braškių',
+        'Please give (me) fruits': '(Prašom|Prašau) (duoti|duokite) [man] vaisių',
+        'Please give (me) two tomatoes': '(Prašom|Prašau) (duoti|duokite) [man] du pomidorus',
+        'Please give (me) two beetroots': '(Prašom|Prašau) (duoti|duokite) [man] du burokėlius',
+        'Please give (me) two apples': '(Prašom|Prašau) (duoti|duokite) [man] du obuolius',
+        'Please give (me) two carrots': '(Prašom|Prašau) (duoti|duokite) [man] dvi morkas',
+        'Please give (me) two strawberries': '(Prašom|Prašau) (duoti|duokite) [man] dvi braškes',
+        'Please give (me) two fruits': '(Prašom|Prašau) (duoti|duokite) [man] du vaisius',
         '31 eur': 'trisdešimt vienas euras',
         '5 eur': 'penki eurai',
         '11 eur': 'vienuolika eurų',
@@ -855,6 +921,78 @@ var dicts = {
         '22 eur': 'dvidešimt du eurai',
         '2 eur': 'du eurai',
         '20 eur': 'dvidešimt eurų'
+    },
+    'sekmes-9-basic': {
+        'cafe': 'kavinė',
+        'bakery': 'kepyklėlė',
+        'restaurant': 'restoranas',
+        'bar': 'baras',
+        'pizzeria': 'picerija',
+        'waiter': 'padavėjas/padavėja',
+        'menu': 'meniu',
+        'lunch of the day': 'dienos pietūs',
+        'table (small)': 'staliukas',
+        'bill': 'sąskaita',
+        'usually': 'paprastai',
+        'dish': 'patiekalas',
+        'vegetable soup': 'daržovių sriuba',
+        'mushroom soup': 'grybų sriuba',
+        'tomato salad': 'pomidorų salotos',
+        'omelette': 'omletas',
+        'fried eggs': 'kiaušinienė',
+        'fried eggs with bacon': 'kiaušinienė su šonine',
+        'sandwich': 'sumuštinis',
+        'steak (roasted meat)': 'kepsnys',
+        'potato pancakes': 'bulvių blynai',
+        'crepes with jam': 'blyneliai su uogiene',
+        'pasta': 'makaronai',
+        'rice with vegetables': 'ryžiai su daržovėmis',
+        'oat porridge': 'avižinė košė',
+        'dessert': 'desertas',
+        'ice cream': 'ledai',
+        'vinegar': 'actas',
+        'oil': 'aliejus',
+        'sugar': 'cukrus',
+        'salt': 'druska',
+        'mustard': 'garstyčios',
+        'horseradish': 'krienai',
+        'mayonnaise': 'majonezas',
+        'sauce': 'padažas',
+        'jam': 'uogienė',
+        'drink': 'gėrimas',
+        'food': 'maistas',
+        'still water': 'negazuotas vanduo',
+        'fruit tea': 'vaisinė arbata',
+        'apple juice': 'obuolių sultys',
+        'gluten free': 'be glitimo',
+        'Coffee and snacks to take away': 'Kava ir užkandžiai išsinešti',
+        'Reserved': 'Rezervuota',
+        'Lactose free': 'Be laktozės',
+        'spicy': 'aštrus/aštri',
+        'mild (delicate, about taste)': 'švelnus/švelni',
+        'salty': 'sūrus/sūri',
+        'cold beetroot soup': 'šaltibarščiai',
+    },
+    'sekmes-9-advanced': {
+        'I would like tea with lemon': 'Norėčiau arbatos su citrina',
+        'Do you have freshly squeezed orange juice?': 'Ar [jūs] turite šviežiai spaustų apelsinų sulčių?',
+        'What is the cake with?': 'Su kuo yra (pyragas|tortas)?',
+        'Do you have a salad without garlic and without onions?': 'Ar turite salotų be česnakų ir be svogūnų?',
+        'Do you have vegan dishes?': 'Ar [jūs] turite veganiškų patiekalų?',
+        'Do you still have daily lunch?': 'Ar dar turite dienos pietų?',
+        'Please, bill/check': 'Prašom sąskaitą!',
+        'Have you chosen yet?': 'Ar jau išsirinkote?',
+        'Will you pay in cash or by card?': 'Mokėsite grynaisiais ar kortele?',
+        'Is it free here?': 'Ar čia laisva?',
+        'It\'s busy/taken here': 'Čia užimta',
+        'Please, pancakes with mushroom sauce': 'Prašom (blynų|blynelių) su grybų padažu',
+        'Please pack (the food)': 'Prašom supakuoti',
+        'Who do you go to the cafe with?': 'Su kuo tu eini į kavinę?',
+        'Yesterday I ate an egg': 'Vakar aš valgiau kiaušinį',
+        'The day before yesterday I had breakfast at a cafe': 'Užvakar aš pusryčiavau kavinėje',
+        'Did you drink coffee yesterday evening?': 'Ar tu vakar vakare gėrei kavą?/Ar tu gėrei kavą vakar vakare?',
+        'This morning they didn\'t eat anything': 'Šiandien rytą jie nieko nevalgė',
+        'Last weekend we ate cake': 'Aną savaitgalį mes valgėme (pyragą|tortą)'
     },
     'sekmes-10-basic': {
         'vehicles': 'transporto priemonės',
