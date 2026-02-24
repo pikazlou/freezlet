@@ -1298,6 +1298,7 @@ var dicts = {
         'coffee maker': 'kavos aparatas',
         'vacuum cleaner': 'dulkių siurblys',
         'iron': 'lygintuvas',
+        'items': 'daiktai',
         'TV': 'televizorius',
         'lamp': 'lempa',
         'mirror': 'veidrodis',
@@ -1331,9 +1332,30 @@ var dicts = {
         'to switch on (<infinitive form> <present form> <past form>)': 'įjungti įjungia įjungė',
         'to swich off (<infinitive form> <present form> <past form>)': 'išjungti išjungia išjungė',
         'to work, to function (<infinitive form> <present form> <past form>)': 'veikti veikia veikė',
-        'to get out of order (<infinitive form> <present form> <past form>)': 'sugesti sugenda sugedo',
-        'to be out of order, to break down (<infinitive form> <present form> <past form>)': 'trūkti trūksta trūko',
+        'to break down (to malfunction) (<infinitive form> <present form> <past form>)': 'sugesti sugenda sugedo',
+        'to burst (to snap) (<infinitive form> <present form> <past form>)': 'trūkti trūksta trūko',
         'to fix, to repair (<infinitive form> <present form> <past form>)': 'pataisyti pataiso pataisė'
+    },
+    'sekmes-13-advanced': {
+        'Refrigerator broke': 'Sugedo šaldytuvas/Šaldytuvas sugedo',
+        'Pipe bursted, water is running in the bathroom': 'Trūko vamzdis, vonioje bėga vanduo',
+        'What is the emergency service number?': 'Koks [yra] avarinės tarnybos (telefonas|telefono numeris)?',
+        'There is no hot water': 'Nėra karšto vandens/Karšto vandens nėra',
+        'The computer is not working': 'Neveikia kompiuteris/Kompiuteris neveikia',
+        '(We) need a master': 'Reikia meistro',
+        '(We) need to call a master': 'Reikia iškviesti meistrą',
+        'Wait for the master tomorrow': 'Laukite meistro rytoj/Rytoj laukite meistro',
+        'The master will be in fifteen minutes': 'Meistras bus po penkiolikos minučių',
+        'Could you tidy up the apartment?': '(Ar|Gal) galėtumėte sutvarkyti butą?',
+        'How much does house cleaning cost?': 'Kiek kainuoja namo valymas?',
+        'The room should be vacuumed and the floor should be washed': 'Reikėtų išsiurbti kambarį ir išplauti grindis',
+        'Please clean the dust off the shelves': 'Prašom nuvalyti dulkes nuo lentynų',
+        'Please vacuum under the closet': 'Prašom išsiurbti po spinta',
+        'Thank you for tidying up the apartment!': 'Ačiū, kad sutvarkėte butą!',
+        'The kitchen needs to be tidied up': 'Reikia sutvarkyti virtuvę',
+        'the windows should be cleaned': 'Reikėtų išvalyti langus',
+
+
     }
 
 }
