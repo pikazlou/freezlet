@@ -1353,9 +1353,11 @@ var dicts = {
         'Please vacuum under the closet': 'Prašom išsiurbti po spinta',
         'Thank you for tidying up the apartment!': 'Ačiū, kad sutvarkėte butą!',
         'The kitchen needs to be tidied up': 'Reikia sutvarkyti virtuvę',
-        'the windows should be cleaned': 'Reikėtų išvalyti langus',
-
-
+        'The windows should be cleaned': 'Reikėtų išvalyti langus',
+        'Cleaning supplies are in the bathroom': 'Valymo priemonės yra vonioje',
+        'Daily apartment cleaning': 'Kasdienis buto valymas',
+        'Cleaning after renovation or construction works': 'Valymas po remonto ar statybos darbų',
+        'Handyman services at home or office': 'Meistro paslaugos į namus ar biurą'
     }
 
 }
