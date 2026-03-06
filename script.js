@@ -1445,5 +1445,5 @@ var dicts = {
         'to buy (past form)': 'nusipirko',
         'to shop': 'apsipirkti',
         'to shop (present form)': 'apsiperka',
-        'to shop (past form)': 'apsipirko',
+        'to shop (past form)': 'apsipirko'
 }
