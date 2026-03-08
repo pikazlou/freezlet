@@ -1572,7 +1572,7 @@ var dicts = {
         'to catch a cold (past form)': 'peršalo',
         'to get better/to recover': 'sveikti/pasveikti',
         'to get better/to recover (present form)': 'sveiksta/pasveiksta',
-        'to get better/to recover (past form)': 'sveiko/pasveiko
+        'to get better/to recover (past form)': 'sveiko/pasveiko',
         'health': 'sveikata',
         'healthy': 'sveikas/sveika',
         'tired': 'pavargęs/pavargusi',
