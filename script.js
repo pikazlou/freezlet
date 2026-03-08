@@ -1600,7 +1600,22 @@ var dicts = {
         'October': 'spalis',
         'November': 'lapkritis',
         'December': 'gruodis',
-
-
+    },
+    'sekmes-16-advanced': {
+        'How do you feel?': 'Kaip [tu] jautiesi?/Kaip [jūs] jaučiatės?',
+        'I feel worse today than yesterday': 'Šiandien jaučiuosi blogiau (negu|nei) vakar',
+        'I\'m hot (feverish)': 'Man karšta',
+        'Does it hurt here?': 'Ar čia skauda?',
+        'Where does it hurt?': 'Kur skauda?',
+        'What is hurting (to you)?': 'Kas (tau|jums) skauda?',
+        'I have a headache': 'Man skauda galvą',
+        'I would like to book an appointment with a family doctor': 'Norėčiau užsiregistruoti pas šeimos gydytoją',
+        'When does the family doctor work?': 'Kada dirba šeimos gydytojas?',
+        'How old are you?': 'Kiek tau metų?/Kiek jums metų?',
+        'Get well soon!': 'Greičiau pasveik!/Greičiau pasveikite!/Sveik greičiau!/Sveikite greičiau!',
+        'Get well!': 'Pasveik!/Pasveikite!/Sveik!/Sveikite!',
+        'Are you still sick?': 'Ar [tu] [vis] dar sergi?/Ar [jūs] [vis] dar sergate?',
+        'I’ve already recovered': '[Aš] jau pasveikau',
+        'I would like to register (book the visit) the cat with a veterinarian': 'Norėčiau užregistruoti katę pas veterinarą',
     }
 }
