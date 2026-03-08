@@ -1503,6 +1503,13 @@ var dicts = {
         'to wear (habitually)': 'nešioti',
         'to wear (habitually, present form)': 'nešioja',
         'to wear (habitually, past form)': 'nešiojo',
+        'to shorten': 'patrumpinti',
+        'to fix (clothes/boots)': 'pataisyti',
+        'to fix (clothes/boots, present form)': 'pataiso',
+        'to fix (clothes/boots, past form)': 'pataisė',
+        'to have something sewn': 'pasisiūti',
+        'to have something sewn (present form)': 'pasisiuva',
+        'to have something sewn (past form)': 'pasisiuvo',
         'to pick up': 'atsiimti',
         'to pick up (present form)': 'atsiima',
         'to pick up (past form)': 'atsiėmė',
@@ -1518,5 +1525,17 @@ var dicts = {
         'to wash (laundry)': 'skalbti',
         'to wash (laundry, present form)': 'skalbia',
         'to wash (laundry, past form)': 'skalbė',
+    },
+    'sekmes-15-advanced': {
+        'I would like to exchange the sweater for a size M': 'Norėčiau pakeisti megztinį į M dydį',
+        'There is a stain on the blouse': 'Ant palaidinės yra dėmė',
+        'Please shorten the skirt': '(Prašau|Prašom) patrumpinti sijoną',
+        'When can you fix the pants?': 'Kada (galėtumėte|galite) pataisyti kelnes?',
+        'Will you be able to fix the shoes?': 'Ar (galėsite|galėtumėte) pataisyti batelius?',
+        'When will I be able to pick up the jeans?': 'Kada galėsiu atsiimti džinsus?',
+        'I would like a long dress without sleeves': 'Norėčiau ilgos suknelės be rankovių',
+        'Jacket with buttons, zipper and pockets': 'Striukė su sagomis, užtrauktuku ir kišenėmis',
+        'Footwear and clothing repair': 'Avalynės ir drabužių (taisykla|taisymas)',
+        
     }
 }
