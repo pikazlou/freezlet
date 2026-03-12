@@ -1996,6 +1996,20 @@ var dicts = {
         'autumn': 'ruduo',
         'winter': 'žiema',
         'spring': 'pavasaris',
+    },
+    'sekmes-20-advanced': {
+        'What do you like to do in your free time?': 'Ką [tu] mėgsti veikti laisvalaikiu?/Ką [jūs] mėgstate veikti laisvalaikiu?',
+        'I like listening to music': '[Aš] mėgstu klausyti muzikos',
+        'What do you usually do on the weekend?': 'Ką [tu] paprastai darai savaitgaliais?/Ką [jūs] paprastai darote savaitgaliais?',
+        'Do you know how to play tennis?': 'Ar [tu] moki žaisti tenisą?/Ar [jūs] mokate žaisti tenisą?',
+        'To go to a photo exhibition': 'Eiti į fotografijos parodą',
+        'What will you do during the holidays?': 'Ką [tu] veiksi per atostogas?/Ką [jūs] veiksite per atostogas?',
+        'When did you return from the trip?': 'Kada [tu] grįžai iš kelionės?/Kada [jūs] grįžote iš kelionės?',
+        'How long does the bus go to Kaunas?': 'Kiek laiko autobusas važiuoja į Kauną?',
+        'Where can I leave luggage?': 'Kur galiu palikti bagažą?',
+        'I came back two days ago': 'Grįžau prieš dvi dienas',
+        'Did you have a good rest?': 'Ar [tu] gerai pailsėjai?/Ar [jūs] gerai pailsėjote?',
+        'Have a great holiday!': 'Gerų [tau] atostogų!',
     }
     
 }
