@@ -2141,7 +2141,7 @@ var dicts = {
         'to run': 'bėgti',
         'to walk': 'vaikščioti',
         'to move': 'judėti',
-        'to pass': 'praeiti',
+        'to pass (when going)': 'praeiti',
         'to reach': 'pasiekti',
         'to travel': 'keliauti',
         'to sit down': 'atsisėsti',
@@ -2166,7 +2166,7 @@ var dicts = {
         'to plan': 'planuoti',
 
         'to love': 'mylėti',
-        'to like': 'patikti',
+        'to like': 'patikti/mėgti',
         'to feel': 'jausti',
         'to hope': 'tikėtis',
         'to fear': 'bijoti',
